@@ -12,6 +12,7 @@ La idea es centralizar snippets, configuraciones base y buenas prácticas que pu
 3. [Configuración con Gulp](#3-configuración-con-gulp)
 4. [Snippets Sass](#4-snippets-sass)
 5. [Snippets JavaScript](#5-snippets-javascript)
+6. [Snippets personalizados en VSCode](#6-snippets-personalizados-en-vscode)
 
 ---
 
@@ -190,6 +191,83 @@ window.addEventListener("resize", debounce(() => {
 
 ---
 
+## 6. Snippets personalizados en VSCode
+
+Podés crear snippets personalizados en VSCode siguiendo estos pasos:
+
+1. Abrí la paleta de comandos (`Ctrl + Shift + P` o `Cmd + Shift + P` en Mac).
+2. Escribí **Configure User Snippets** y seleccioná la opción.
+3. Elegí el lenguaje (por ejemplo: `css.json`, `scss.json`, `javascript.json`).
+4. Agregá tus snippets en formato JSON.
+
+### Ejemplo: Snippet para media queries
+
+```json
+{
+  "Media Query Mobile First": {
+    "prefix": "mq",
+    "body": [
+      "@media (min-width: ${1:768px}) {",
+      "  $0",
+      "}"
+    ],
+    "description": "Crea una media query mobile first"
+  }
+}
+```
+
+### Ejemplo: Snippet para Flexbox rápido
+
+```json
+{
+  "Flex Center": {
+    "prefix": "flexc",
+    "body": [
+      "display: flex;",
+      "justify-content: center;",
+      "align-items: center;"
+    ],
+    "description": "Centrar con Flexbox"
+  }
+}
+```
+
+### Ejemplo: Snippet para Grid básico
+
+```json
+{
+  "Grid Basic": {
+    "prefix": "gridb",
+    "body": [
+      "display: grid;",
+      "grid-template-columns: repeat(${1:3}, 1fr);",
+      "gap: ${2:1rem};"
+    ],
+    "description": "Crea un grid básico con columnas"
+  }
+}
+```
+
+### Ejemplo: Snippet de función JS básica
+
+```json
+{
+  "JS Function": {
+    "prefix": "fn",
+    "body": [
+      "function ${1:name}(${2:params}) {",
+      "  $0",
+      "}"
+    ],
+    "description": "Crea una función en JavaScript"
+  }
+}
+```
+
+Con estos snippets podés acelerar el trabajo repetitivo en CSS, Sass y JS.
+
+---
+
 ## 🚀 Uso
 
 1. Clonar el repositorio:
@@ -221,6 +299,7 @@ window.addEventListener("resize", debounce(() => {
 * Configuración de Prettier/ESLint.
 * Snippets de animaciones CSS y JS.
 * Helpers para fetch API y manejo de datos.
+* Snippets adicionales para VSCode (loops en Sass, templates HTML, etc.).
 
 ---
 
