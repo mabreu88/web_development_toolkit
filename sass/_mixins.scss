@@ -1,0 +1,22 @@
+@use 'sass:map';
+@use 'variables' as v;
+
+$breakpoints: (
+  smartphone: v.$smartphone,
+  tablet: v.$tablet,
+  desktop: v.$desktop,
+  desktopXL: v.$desktopXL
+);
+
+// Media query mixins
+@mixin respond-to($device) {
+  $size: map.get($breakpoints, $device);
+
+  @if $size {
+    @media screen and (min-width: #{$size}) {
+      @content;
+    }
+  } @else {
+    @warn "⚠️ Breakpoint '#{$device}' no existe en el mapa de breakpoints.";
+  }
+}
