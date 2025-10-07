@@ -1,6 +1,37 @@
 @use 'sass:map';
 @use 'variables' as v;
 
+/// ------------------------------------------------------------
+/// 🗺️ MAPA DE BREAKPOINTS
+/// ------------------------------------------------------------
+/// 
+/// Define los puntos de quiebre principales para el diseño responsive.
+/// Cada clave del mapa representa un dispositivo o rango de pantalla.
+/// 
+/// ### Variables base:
+/// - `v.$smartphone` → ancho máximo para smartphones.
+/// - `v.$tablet` → ancho mínimo para tablets.
+/// - `v.$desktop` → ancho mínimo para escritorios estándar.
+/// - `v.$desktopXL` → ancho mínimo para pantallas grandes.
+///
+/// ### Ejemplo de uso:
+/// ```scss
+/// @include respond-to(tablet) {
+///   .container {
+///     max-width: 90%;
+///   }
+/// }
+/// ```
+///
+/// ### Resultado:
+/// ```css
+/// @media screen and (min-width: 768px) {
+///   .container {
+///     max-width: 90%;
+///   }
+/// }
+/// ```
+///
 $breakpoints: (
   smartphone: v.$smartphone,
   tablet: v.$tablet,
@@ -8,7 +39,47 @@ $breakpoints: (
   desktopXL: v.$desktopXL
 );
 
-// Media query mixins
+
+/// ------------------------------------------------------------
+/// 📱 @mixin respond-to($device)
+/// ------------------------------------------------------------
+/// 
+/// Genera una **media query adaptable** en función de los breakpoints definidos
+/// en el mapa `$breakpoints`.
+///
+/// ### Parámetros:
+/// - **$device** *(string)*: nombre del breakpoint declarado en `$breakpoints`.
+///
+/// ### Funcionalidad:
+/// - Obtiene el valor del breakpoint desde el mapa con `map.get()`.
+/// - Si el breakpoint existe, genera una media query con `min-width`.
+/// - Si el breakpoint no existe, muestra una advertencia en la compilación.
+///
+/// ### Ejemplo de uso:
+/// ```scss
+/// .nav {
+///   @include respond-to(desktop) {
+///     display: flex;
+///     justify-content: space-between;
+///   }
+/// }
+/// ```
+///
+/// ### Resultado:
+/// ```css
+/// @media screen and (min-width: 1200px) {
+///   .nav {
+///     display: flex;
+///     justify-content: space-between;
+///   }
+/// }
+/// ```
+///
+/// ### Notas:
+/// - Se recomienda usar nombres coherentes con los definidos en `$breakpoints`.
+/// - Si el nombre no coincide, Sass emitirá una advertencia:
+///   `"⚠️ Breakpoint 'nombre' no existe en el mapa de breakpoints."`
+///
 @mixin respond-to($device) {
   $size: map.get($breakpoints, $device);
 
@@ -19,4 +90,48 @@ $breakpoints: (
   } @else {
     @warn "⚠️ Breakpoint '#{$device}' no existe en el mapa de breakpoints.";
   }
+}
+
+
+/// ------------------------------------------------------------
+/// 🧱 @mixin grid($columns: 1, $gap: 5rem)
+/// ------------------------------------------------------------
+/// 
+/// Crea un contenedor con **diseño de cuadrícula (CSS Grid)** flexible y
+/// configurable.
+///
+/// ### Parámetros:
+/// - **$columns** *(number)*: cantidad de columnas.  
+///   - *Por defecto:* `1`  
+///   - Se usa en `grid-template-columns: repeat($columns, 1fr);`
+///
+/// - **$gap** *(length)*: espacio entre los elementos.  
+///   - *Por defecto:* `5rem`  
+///   - Se aplica a la propiedad `gap`.
+///
+/// ### Ejemplo de uso:
+/// ```scss
+/// .gallery {
+///   @include grid(3, 2rem);
+/// }
+/// ```
+///
+/// ### Resultado:
+/// ```css
+/// .gallery {
+///   display: grid;
+///   grid-template-columns: repeat(3, 1fr);
+///   gap: 2rem;
+/// }
+/// ```
+///
+/// ### Descripción:
+/// Este mixin simplifica la creación de layouts con **CSS Grid**, permitiendo
+/// definir fácilmente la cantidad de columnas y el espaciado entre elementos.
+/// Ideal para galerías, tarjetas, secciones o layouts responsivos.
+///
+@mixin grid($columns: 1, $gap: 5rem) {
+  display: grid;
+  grid-template-columns: repeat($columns, 1fr);
+  gap: $gap;
 }
